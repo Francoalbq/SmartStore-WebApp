@@ -1,6 +1,6 @@
 # Proyecto E-commerce: Plataforma de Venta Minorista
 
-Este repositorio contiene el código fuente de una plataforma de comercio electrónico desarrollada con ASP.NET Core 7/8 (MVC). El proyecto está diseñado con arquitectura limpia, buenas prácticas y patrones de diseño enfocados en la gestión integral de productos, pedidos y pagos.
+Este repositorio contiene el código fuente de una plataforma de comercio electrónico desarrollada con ASP.NET Core 8 (MVC). El proyecto está diseñado con arquitectura limpia, buenas prácticas y patrones de diseño enfocados en la gestión integral de productos, pedidos y pagos.
 
 ## 1. Arquitectura y Patrones de Diseño
 
