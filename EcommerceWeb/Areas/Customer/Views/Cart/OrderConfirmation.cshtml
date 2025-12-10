@@ -1,0 +1,163 @@
+﻿@model int
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --dark-color: #1a1a2e;
+            --darker-color: #16213e;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .confirmation-container {
+            max-width: 800px;
+            margin: auto auto;
+            margin-top:80px;
+            padding: 2rem;
+        }
+        
+        .confirmation-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 3rem;
+            text-align: center;
+        }
+        
+        .confirmation-icon {
+            width: 120px;
+            height: 120px;
+            background-color: rgba(37, 99, 235, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: var(--primary-color);
+            font-size: 3.5rem;
+        }
+        
+        .confirmation-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .order-number {
+            background-color: var(--light-color);
+            color: var(--primary-dark);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-outline {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+            color: white;
+        }
+        
+        h2 {
+            color: var(--dark-color);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        h3 {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        p {
+            color: var(--gray-color);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .action-buttons {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+       
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-container ">
+        <div class="confirmation-card">
+            <div class="confirmation-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            
+            <h3>Thank You For Your Order!</h3>
+            <p class="lead">We've received your order and are preparing it for shipment.</p>
+            
+            <img src="/Images/img/Cart.jpg" alt="Order Confirmation" class="confirmation-image" width="400">
+            
+            <h2>Your Order Is Confirmed</h2>
+            <div class="order-number">
+                Order Number: #@Model
+            </div>
+            
+            <p>We've sent a confirmation email with your order details. You'll receive another email when your order ships.</p>
+            
+            <div class="action-buttons">
+                <a href="/Customer/Home" class="btn btn-primary">
+                    <i class="fas fa-home me-2"></i> Back to Home
+                </a>
+                <a href="/Customer/Order/Index" class="btn btn-outline">
+                    <i class="fas fa-clipboard-list me-2"></i> View Orders
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Smart Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --dark-color: #1a1a2e;
+            --darker-color: #16213e;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+
+        .contact-header {
+            background: linear-gradient(rgba(26, 26, 46, 0.8), rgba(26, 26, 46, 0.8)), url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 300px;
+        }
+
+        .contact-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+            .contact-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .contact-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+            .btn-primary:hover {
+                background-color: var(--primary-dark);
+                border-color: var(--primary-dark);
+            }
+
+        .map-container {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="contact-header text-white d-flex align-items-center justify-content-center mb-5">
+        <div class="text-center">
+            <h1 class="display-4 fw-bold">Contact Us</h1>
+            <p class="lead">We're here to help and answer any questions you may have</p>
+        </div>
+    </header>
+
+    <!-- Contact Cards Section -->
+    <section class="container mb-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="contact-card card h-100 p-4 text-center">
+                    <div class="contact-icon mb-3">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                    <h3>Our Location</h3>
+                    <p class="text-muted">123 Tech Street<br>Cairo, Egypt</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="contact-card card h-100 p-4 text-center">
+                    <div class="contact-icon mb-3">
+                        <i class="bi bi-telephone-fill"></i>
+                    </div>
+                    <h3>Phone Number</h3>
+                    <p class="text-muted">+20 123 456 7890<br>Mon-Fri, 9am-5pm</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="contact-card card h-100 p-4 text-center">
+                    <div class="contact-icon mb-3">
+                        <i class="bi bi-envelope-fill"></i>
+                    </div>
+                    <h3>Email Address</h3>
+                    <p class="text-muted">info@smartstore.com<br>support@smartstore.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form + Map Section -->
+    <section class="container mb-5">
+        <div class="row g-5">
+            <div class="col-lg-6">
+                <div class="card p-4 h-100">
+                    <h2 class="mb-4">Send Us a Message</h2>
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary px-4 py-2">Send Message</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="map-container h-100">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.647854029567!2d31.23594751511496!3d30.04455898188368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458409e8f3b4c1d%3A0x3e8a8f7e0f4a3b1d!2sCairo%2C%20Egypt!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
+                            width="100%" height="100%" style="border:0; min-height: 400px;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Preview Section -->
+    <section class="container mb-5 text-center">
+        <h2 class="mb-4">Need Quick Help?</h2>
+        <p class="lead mb-4">Check out our frequently asked questions</p>
+        <a href="/Customer/Home/faqs" class="btn btn-outline-primary px-4 py-2">View FAQs</a>
+    </section>
+</body>
+</html>

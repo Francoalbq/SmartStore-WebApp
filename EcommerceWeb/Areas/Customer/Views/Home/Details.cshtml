@@ -1,0 +1,157 @@
+﻿@model ShoppingCart
+
+<form method="post" asp-action="Details">
+    <section class="py-5 mt-3" style="background: linear-gradient(to bottom, #f9fafb, #ffffff);">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-5 gx-lg-6 align-items-center">
+                <input hidden asp-for="ProductId" />
+
+                <!-- Product Gallery -->
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="product-gallery bg-white p-1 rounded-4 shadow-sm">
+                        <div class="main-image mb-1">
+                            <img class="img-fluid w-90 rounded-3" src="~/@Model.Product.Img" alt="@Model.Product.Name"
+                                 style="height: 300px; object-fit: contain; cursor: zoom-in;"
+                                 id="mainImage">
+                        </div>
+                        <div class="thumbnail-scroller d-flex overflow-auto pb-2 mb-3">
+                            <img class="thumbnail me-2 rounded-2 border" src="~/@Model.Product.Img"
+                                 style="width: 80px; height: 80px; object-fit: cover; cursor: pointer; opacity: 0.7;"
+                                 onmouseover="document.getElementById('mainImage').src = this.src">
+                            <!-- Add more thumbnails here if available -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Details -->
+                <div class="col-lg-6">
+                    <div class="product-details ps-lg-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="badge bg-primary bg-opacity-10 text-primary fs-6 fw-normal me-2">@Model.Product.Category.Name</span>
+                            <div class="rating small text-warning">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <span class="text-muted ms-1">(4.5)</span>
+                            </div>
+                        </div>
+
+                        <h1 class="display-5 fw-bold mb-3" style="line-height: 1.2;">@Model.Product.Name</h1>
+
+                        <div class="price-wrapper mb-4">
+                            <span class="h3 fw-bold text-dark">$@Model.Product.Price</span>
+                            <span class="text-muted text-decoration-line-through ms-2">$45.00</span>
+                            <span class="badge bg-success bg-opacity-10 text-success ms-2">20% OFF</span>
+                        </div>
+
+                        <div class="product-meta mb-4">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="d-flex align-items-center text-muted">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    In Stock (15 Items)
+                                </span>
+                                <span class="d-flex align-items-center text-muted">
+                                    <i class="bi bi-truck text-primary me-2"></i>
+                                    Free Shipping
+                                </span>
+                                <span class="d-flex align-items-center text-muted">
+                                    <i class="bi bi-arrow-repeat text-info me-2"></i>
+                                    30-Day Returns
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="product-description mb-5">
+                            <h6 class="fw-bold mb-3">Description</h6>
+                            <div class="text-muted" style="line-height: 1.8;">
+                                @Html.Raw(Model.Product.Description)
+                            </div>
+                        </div>
+
+                        <div class="product-actions">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-md-4 col-6">
+                                    <div class="input-group">
+                                        <button class="btn btn-outline-secondary px-3" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                            <i class="bi bi-dash"></i>
+                                        </button>
+                                        <input class="form-control text-center border-secondary"
+                                               id="inputQuantity" asp-for="Count" value="1" min="1" max="15">
+                                        <button class="btn btn-outline-secondary px-3" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                            <i class="bi bi-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-6">
+                                    <button class="btn btn-dark btn-lg w-100 py-3" type="submit">
+                                        <i class="bi bi-cart-plus-fill me-2"></i>
+                                        Add to Cart
+                                    </button>
+                                </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+<style>
+    .product-gallery {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .thumbnail-scroller::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .thumbnail-scroller::-webkit-scrollbar-thumb {
+        background: #ddd;
+        border-radius: 4px;
+    }
+
+    .thumbnail:hover {
+        opacity: 1 !important;
+        border-color: #0d6efd !important;
+    }
+
+    .btn-dark {
+        background-color: #212529;
+        transition: all 0.3s ease;
+    }
+
+        .btn-dark:hover {
+            background-color: #424649;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+    .input-group button {
+        transition: all 0.2s ease;
+    }
+
+        .input-group button:hover {
+            background-color: #f8f9fa;
+        }
+
+    .rating {
+        letter-spacing: 1px;
+    }
+
+    .badge {
+        padding: 5px 10px;
+        font-weight: 500;
+    }
+</style>
+
+<script>
+    // Simple zoom effect for main image
+    document.getElementById('mainImage').addEventListener('click', function () {
+        this.style.transform = this.style.transform === 'scale(1.2)' ? 'scale(1)' : 'scale(1.2)';
+        this.style.transition = 'transform 0.3s ease';
+    });
+</script>

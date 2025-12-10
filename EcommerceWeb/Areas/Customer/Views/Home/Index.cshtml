@@ -1,0 +1,152 @@
+﻿@model IEnumerable<Product>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+<div id="hero-carousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <div class="carousel-inner">
+        <!-- Slide 1 -->
+        <div class="carousel-item active c-item">
+            <div class="overlay"></div>
+            <img src="/Images/img/Carsouel3.webp" class="d-block w-100 c-img" alt="Slide 1">
+            <div class="carousel-caption text-start">
+                <h1>Welcome to <span class="brand-text">Smart Store</span></h1>
+                <p class="lead">Discover top-quality products tailored for you.</p>
+                <a href="#shop" class="btn btn-primary btn-lg rounded-pill px-4">Start Shopping</a>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item c-item">
+            <div class="overlay"></div>
+            <img src="/Images/img/ShoppingCart.jpg" class="d-block w-100 c-img" alt="Slide 2">
+            <div class="carousel-caption text-start">
+                <h1>Your Cart, Your Choice</h1>
+                <p class="lead">Enjoy seamless shopping experience anytime.</p>
+                <a href="#products" class="btn btn-primary btn-lg rounded-pill px-4">Explore</a>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item c-item">
+            <div class="overlay"></div>
+            <img src="/Images/img/Cart.jpg" class="d-block w-100 c-img" alt="Slide 3">
+            <div class="carousel-caption text-start">
+                <h1>Shop Smarter, Live Better</h1>
+                <p class="lead">High-quality products with unbeatable prices.</p>
+                <a href="#contact" class="btn btn-primary btn-lg rounded-pill px-4">Get Started</a>
+            </div>
+        </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#hero-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#hero-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<section class="py-2">
+    <div class="container px-4 px-lg-5 mt-1">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+            @foreach (var item in Model)
+            {
+                <div class="col mb-5">
+                    <div class="card h-100 shadow-sm">
+                        <!-- Product image-->
+                        <a asp-action="Details" asp-route-ProductId="@item.Id">
+                            <img class="card-img-top p-3" src="~/@item.Img" alt="@item.Name" style="object-fit: contain; height: 200px; width: 100%;" />
+                        </a>
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder text-truncate mb-2">@item.Name</h5>
+                                <!-- Product price-->
+                                <span class="fw-bold text-primary fs-5">$@item.Price</span>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a asp-action="Details" asp-route-ProductId="@item.Id" class="btn btn-dark mt-auto w-100">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-5">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page }),
+                     new PagedListRenderOptions
+            {
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" },
+                UlElementClasses = new string[] { "pagination justify-content-center" },
+                DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+                DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded
+            })
+        </div>
+    </div>
+</section>
+
+<style>
+    .card {
+        border: none;
+        border-radius: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+    .btn-dark {
+        background-color: #212529;
+        border: none;
+        padding: 8px 16px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-dark:hover {
+            background-color: #424649;
+        }
+
+    .card-img-top {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background-color: #f8f9fa;
+    }
+
+    .page-item.active .page-link {
+        background-color: #212529;
+        border-color: #212529;
+    }
+
+    .page-link {
+        color: #212529;
+    }
+</style>

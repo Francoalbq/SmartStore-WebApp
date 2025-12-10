@@ -1,0 +1,289 @@
+﻿
+
+                                @model ShoppingCartVM
+@using Microsoft.Extensions.Options
+@inject IOptions<Ecommerce.Utilities.StripeData> Stripe
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Checkout - Smart Store</title>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --dark-color: #1a1a2e;
+            --darker-color: #16213e;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: var(--dark-color);
+        }
+        
+        .checkout-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            margin-top:90px;
+        }
+        
+        .checkout-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        .checkout-header {
+            background-color: var(--darker-color);
+            color: white;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .form-control, .form-select {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.1);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .cart-item {
+            transition: all 0.3s;
+            border-radius: 8px;
+        }
+        
+        .cart-item:hover {
+            background-color: rgba(248, 250, 252, 0.8);
+        }
+        
+        .item-count {
+            background-color: var(--primary-light);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .btn-outline {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+            color: white;
+        }
+        
+        .security-badge {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary-dark);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+        
+        .total-box {
+            background-color: var(--light-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .validation-error {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon input {
+            padding-left: 2.5rem;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+        }
+        
+     
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="checkout-card">
+            <div class="checkout-header">
+                <h2 class="h4 mb-0">Complete Your Order</h2>
+            </div>
+            
+            <form method="post" class="p-4">
+                <div class="row g-4">
+                    <!-- Billing Address Section -->
+                    <div class="col-lg-6">
+                        <div class="h5 mb-4 text-primary">Billing Information</div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="OrderHeader.Name" class="form-label">Full Name</label>
+                            <div class="input-with-icon">
+                                <i class="bi bi-person input-icon"></i>
+                                <input asp-for="OrderHeader.Name" type="text" class="form-control" placeholder="John Doe">
+                            </div>
+                            <span asp-validation-for="OrderHeader.Name" class="validation-error"></span>
+                        </div>
+                        
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="OrderHeader.City" class="form-label">City</label>
+                                <div class="input-with-icon">
+                                    <i class="bi bi-building input-icon"></i>
+                                    <input asp-for="OrderHeader.City" type="text" class="form-control" placeholder="Your City">
+                                </div>
+                                <span asp-validation-for="OrderHeader.City" class="validation-error"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="OrderHeader.PhoneNumber" class="form-label">Phone Number</label>
+                                <div class="input-with-icon">
+                                    <i class="bi bi-telephone input-icon"></i>
+                                    <input asp-for="OrderHeader.PhoneNumber" type="text" class="form-control" placeholder="+1234567890">
+                                </div>
+                                <span asp-validation-for="OrderHeader.PhoneNumber" class="validation-error"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="OrderHeader.Address" class="form-label">Street Address</label>
+                            <div class="input-with-icon">
+                                <i class="bi bi-house-door input-icon"></i>
+                                <input asp-for="OrderHeader.Address" type="text" class="form-control" placeholder="123 Main St">
+                            </div>
+                            <span asp-validation-for="OrderHeader.Address" class="validation-error"></span>
+                        </div>
+                        
+                        <div class="security-badge d-inline-flex align-items-center mt-3">
+                            <i class="fas fa-lock me-2"></i>
+                            <span>Your information is securely encrypted</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Order Summary Section -->
+                    <div class="col-lg-6">
+                        <div class="h5 mb-4 text-primary">Order Summary</div>
+                        
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="mb-0">Your Items</h6>
+                                <a href="/Customer/Cart/Index" class="text-white btn btn-primary small">Edit Cart</a>
+                            </div>
+                            
+                            <div class="list-group list-group-flush mb-4">
+                                @foreach (var item in Model.CartsList)
+                                {
+                                    <div class="list-group-item cart-item p-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="position-relative me-3">
+                                                <img src="/@item.Product.Img" alt="@item.Product.Name" class="rounded" width="60" height="60">
+                                                <span class="item-count">@item.Count</span>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-1">@item.Product.Name</h6>
+                                                <small class="text-muted">@item.Product.Price.ToString("c") each</small>
+                                            </div>
+                                            <div class="text-end">
+                                                <strong>@((item.Product.Price * item.Count).ToString("c"))</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            
+                            <div class="total-box">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="text-muted">Subtotal</span>
+                                    <span>@Model.OrderHeader.TotalPrice.ToString("c")</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="text-muted">Shipping</span>
+                                    <span>FREE</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong>Total</strong>
+                                    <strong class="h5 text-primary">@Model.OrderHeader.TotalPrice.ToString("c")</strong>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-3 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-credit-card me-2"></i> Place Order
+                            </button>
+                            <a href="/Customer/Home" class="btn btn-outline">
+                                <i class="bi bi-arrow-left me-2"></i> Continue Shopping
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'></script>
+    <script>
+        // Enable Bootstrap tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+    </script>
+</body>
+</html>

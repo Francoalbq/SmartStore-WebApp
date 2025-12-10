@@ -1,0 +1,169 @@
+﻿@model ShoppingCartVM
+
+<form method="post">
+    <div class="container py-5 mt-5">
+        <div class="card shadow-lg">
+            <div class="card-header bg-darker text-light py-3">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h5 class="mb-0">
+                            <i class="fas fa-shopping-cart me-2"></i>Shopping Cart
+                        </h5>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Index"
+                           class="btn btn-outline-light btn-sm rounded-pill px-3">
+                            Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-0">
+                @if (Model.CartsList.Count() < 1)
+                {
+                    <div class="text-center py-5">
+                        <i class="fas fa-shopping-basket fa-4x text-gray mb-3"></i>
+                        <h4 class="text-dark">Your Cart is Empty</h4>
+                        <p class="text-muted">Add some items to get started</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="list-group list-group-flush">
+                        @foreach (var item in Model.CartsList)
+                        {
+                            <div class="list-group-item p-4">
+                                <div class="row align-items-center">
+                                    <div class="col-2 col-lg-1 d-none d-lg-block">
+                                        <img src="~/@item.Product.Img" class="img-fluid rounded shadow-sm" alt="@item.Product.Name" />
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <h6 class="mb-1"><strong>@item.Product.Name</strong></h6>
+                                        <p class="small text-muted mb-2">@Html.Raw(item.Product.Description)</p>
+                                    </div>
+                                    <div class="col-12 col-lg-5">
+                                        <div class="row align-items-center">
+                                            <div class="col-4 text-end">
+                                                <span class="text-primary fw-bold">@item.Product.Price.ToString("c")</span>
+                                                <span class="text-muted mx-1">×</span>
+                                                <span class="fw-bold">@item.Count</span>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="btn-group btn-group-sm shadow-sm" role="group">
+                                                    <a asp-action="plus" asp-route-cartId="@item.Id"
+                                                       class="btn btn-outline-primary">
+                                                        <i class="bi bi-plus-lg"></i>
+                                                    </a>
+                                                    <a asp-action="minus" asp-route-cartId="@item.Id"
+                                                       class="btn btn-outline-primary">
+                                                        <i class="bi bi-dash-lg"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-4 text-end">
+                                                <a asp-action="remove" asp-route-cartId="@item.Id"
+                                                   class="btn btn-outline-danger btn-sm rounded-circle">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="p-4">
+                        <div class="row justify-content-end">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body bg-light rounded">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="text-dark fw-bold">Total (USD)</span>
+                                            <span class="text-dark fw-bold fs-5">@Model.OrderHeader.TotalPrice.ToString("c")</span>
+                                        </div>
+                                        <a asp-action="Summary" class="btn btn-primary w-100 py-2 rounded-pill">
+                                            Proceed to Checkout
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</form>
+
+<style>
+    :root {
+        --primary-color: #2563eb;
+        --primary-dark: #1e40af;
+        --primary-light: #3b82f6;
+        --dark-color: #1a1a2e;
+        --darker-color: #16213e;
+        --light-color: #f8f9fa;
+        --gray-color: #6c757d;
+    }
+
+    body {
+        background-color: #f5f7fa;
+    }
+
+    .bg-darker {
+        background-color: var(--darker-color);
+    }
+
+    .btn-outline-primary {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+    .card {
+        border: none;
+        border-radius: 0.75rem;
+        overflow: hidden;
+    }
+
+    .list-group-item {
+        border-left: none;
+        border-right: none;
+    }
+
+        .list-group-item:first-child {
+            border-top: none;
+        }
+
+    .shadow-sm {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    }
+
+    .rounded-pill {
+        border-radius: 50rem !important;
+    }
+
+    .rounded-circle {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
